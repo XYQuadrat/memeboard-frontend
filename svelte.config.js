@@ -8,8 +8,8 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		paths:{
-			base: "/memeboard"
+		paths: {
+			base: '/memeboard'
 		},
 		csp: {
 			mode: 'auto',
