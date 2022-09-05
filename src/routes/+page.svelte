@@ -28,6 +28,10 @@
 		return filename;
 	}
 
+	function isVideo(filename: string) {
+		return filename.endsWith('.mp4') || filename.endsWith('.mov');
+	}
+
 	function scrollHandler({ detail: { loaded, complete } }) {
 		fetch(`https://xyquadrat.ch/api/media/top/?skip=${skip}&limit=${limit}`)
 			.then((r) => r.json())
@@ -57,18 +61,36 @@
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-4 max-w-7xl mx-auto">
 		{#each memes as meme}
 			<div class="my-3">
-				<Lightbox transitionDuration={100}>
-					<img
-						slot="thumbnail"
-						class="rounded-t-sm max-h-60 w-full object-cover"
-						src="https://xyquadrat.ch/artarindo/media/thumb/{correctFilename(meme.filename)}"
-						alt="Meme Thumbnail"
-					/>
-					<img
-						src="https://xyquadrat.ch/artarindo/media/{correctFilename(meme.filename)}"
-						alt="Meme"
-					/>
-				</Lightbox>
+				{#if isVideo(meme.filename)}
+					<Lightbox transitionDuration={100}>
+						<img
+							slot="thumbnail"
+							class="rounded-t-sm max-h-60 w-full object-cover"
+							src="https://xyquadrat.ch/artarindo/media/thumb/{correctFilename(meme.filename)}"
+							alt="Meme Thumbnail"
+						/>
+						<!-- svelte-ignore a11y-media-has-caption -->
+						<video
+							class=""
+							controls
+							src="https://xyquadrat.ch/artarindo/media/{meme.filename}"
+							alt="Meme"
+						/>
+					</Lightbox>
+				{:else}
+					<Lightbox transitionDuration={100}>
+						<img
+							slot="thumbnail"
+							class="rounded-t-sm max-h-60 w-full object-cover"
+							src="https://xyquadrat.ch/artarindo/media/thumb/{correctFilename(meme.filename)}"
+							alt="Meme Thumbnail"
+						/>
+						<img
+							src="https://xyquadrat.ch/artarindo/media/{correctFilename(meme.filename)}"
+							alt="Meme"
+						/>
+					</Lightbox>
+				{/if}
 				<div class="rounded-b-sm dark:bg-slate-700 p-4 h-16 flex items-center">
 					<a href={meme.message_url} target="_blank">
 						<svg
