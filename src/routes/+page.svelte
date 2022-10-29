@@ -65,7 +65,7 @@
 					<Lightbox transitionDuration={100}>
 						<img
 							slot="thumbnail"
-							class="rounded-t-sm max-h-60 w-full object-cover"
+							class="rounded-t-sm !h-60 w-full object-cover"
 							src="https://xyquadrat.ch/artarindo/media/thumb/{correctFilename(meme.filename)}"
 							alt="Meme Thumbnail"
 						/>
@@ -81,7 +81,7 @@
 					<Lightbox transitionDuration={100}>
 						<img
 							slot="thumbnail"
-							class="rounded-t-sm max-h-60 w-full object-cover"
+							class="rounded-t-sm !h-60 w-full object-cover"
 							src="https://xyquadrat.ch/artarindo/media/thumb/{correctFilename(meme.filename)}"
 							alt="Meme Thumbnail"
 						/>
