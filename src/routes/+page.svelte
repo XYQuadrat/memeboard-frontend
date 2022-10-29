@@ -5,7 +5,7 @@
 
 	interface Meme {
 		filename: string;
-		author: string;
+		author_name: string;
 		score: number;
 		message_url: string;
 		created_date: Date;
@@ -106,7 +106,7 @@
 							/>
 						</svg>
 					</a>
-					{meme.author}
+					{meme.author_name}
 					<span class="ml-auto text-lg font-semibold text-red-500 flex items-center">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
