@@ -9,6 +9,12 @@
 		score: number;
 		message_url: string;
 		created_date: Date;
+		tags: Tag[];
+	}
+
+	interface Tag {
+		id: number;
+		name: string;
 	}
 
 	let memes: Meme[] = [];
@@ -32,7 +38,7 @@
 		return filename.endsWith('.mp4') || filename.endsWith('.mov');
 	}
 
-	function scrollHandler({ detail: { loaded, complete } }) {
+	function scrollHandler({ detail: { loaded, complete} }) {
 		fetch(`https://xyquadrat.ch/api/media/top/?skip=${skip}&limit=${limit}`)
 			.then((r) => r.json())
 			.then((data) => {
@@ -92,7 +98,7 @@
 					</Lightbox>
 				{/if}
 				<div class="rounded-b-sm dark:bg-slate-700 p-4 h-16 flex items-center">
-					<a href={meme.message_url} target="_blank">
+					<a href={meme.message_url} target="_blank" rel="noreferrer">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-5 w-5 mr-2"
@@ -126,6 +132,15 @@
 						{meme.score}</span
 					>
 				</div>
+				{#if meme.tags.length > 0}
+				<div class="dark:bg-slate-700 p-4 pt-0 flex gap-2">
+					{#each meme.tags as tag}
+					<span class="px-3 py-2 rounded-full text-gray-700 bg-gray-200 font-semibold text-sm flex align-center w-max">
+						{tag.name}
+					</span>
+					{/each}
+				</div>
+				{/if}
 			</div>
 		{/each}
 		<InfiniteLoading on:infinite={scrollHandler} />
