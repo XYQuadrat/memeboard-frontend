@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Lightbox } from 'svelte-lightbox';
+	import Tags from 'svelte-tags-input';
 	import InfiniteLoading, { type InfiniteEvent } from 'svelte-infinite-loading';
 	import Svelecte from 'svelecte/src/Svelecte.svelte';
 
 	interface Meme {
+		id: number;
 		filename: string;
 		author_name: string;
 		score: number;
@@ -71,6 +73,19 @@
 			});
 	}
 
+	function handleNewTag(tags: Tag[], id: number) {
+		const options = {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ data: tags })
+		};
+
+		fetch(`https://xyquadrat.ch/api/media/${id}/tags/`, options);
+	}
+
 	onMount(loadTags);
 
 </script>
@@ -113,7 +128,7 @@
 					/>
 				{:else}
 					<img
-						src="https://xyquadrat.ch/artarindo/media/{meme.filename}"
+						src="https://xyquadrat.ch/artarindo/media/{correctFilename(meme.filename)}"
 						alt="Meme"
 					/>
 				{/if}
@@ -153,15 +168,16 @@
 						{meme.score}</span
 					>
 				</div>
-				{#if meme.tags.length > 0}
-				<div class="dark:bg-slate-700 px-4 pb-4 pt-0 flex flex-wrap gap-2 rounded-b-sm">
-					{#each meme.tags as tag}
-					<span class="px-2.5 py-1.5 rounded-full text-gray-700 bg-gray-200 font-semibold text-center text-sm w-max min-w-[2.5rem]">
-						{tag.name}
-					</span>
-					{/each}
+				<div class="text-black">
+					<Tags
+						on:tags={() => handleNewTag(meme.tags, meme.id)}
+						tags={meme.tags}
+						autoComplete={tags}
+						autoCompleteKey={'name'}
+						onlyAutocomplete={true}
+						onlyUnique={true}
+					/>
 				</div>
-				{/if}
 			</div>
 		{/each}
 		<InfiniteLoading identifier={loaderId} on:infinite={scrollHandler}>

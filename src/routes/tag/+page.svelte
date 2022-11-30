@@ -75,7 +75,7 @@
 					{/if}
 				</div>
 				<div class="flex p-4">
-					<a href={meme.message_url} target="_blank">
+					<a href={meme.message_url} target="_blank" rel="noreferrer">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							class="h-5 w-5 mr-2"
