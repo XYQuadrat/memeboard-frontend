@@ -17,7 +17,7 @@ const config = {
 				'script-src': ['self']
 			}
 		},
-		adapter: adapter(),
+		adapter: adapter()
 	}
 };
 
