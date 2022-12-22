@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Lightbox } from 'svelte-lightbox';
-	import InfiniteLoading, { type InfiniteEvent } from 'svelte-infinite-loading';
+	import InfiniteLoading, {
+		type InfiniteEvent,
+		type InfiniteLoadingProps
+	} from 'svelte-infinite-loading';
 	import Svelecte from 'svelecte/src/Svelecte.svelte';
 
 	interface Meme {
@@ -24,7 +27,7 @@
 
 	let tags: Tag[] = [];
 	let filterTagId: number | null = null;
-	let loaderId: any = new Date();
+	let loaderId: InfiniteLoadingProps['identifier'] = new Date();
 
 	async function loadTags() {
 		tags = await fetch(`https://xyquadrat.ch/api/tags/`).then((r) => r.json());
@@ -38,11 +41,6 @@
 		loaderId = new Date();
 	}
 
-	function resetFilter() {
-		filterTagId = null;
-		filterByTag();
-	}
-
 	function correctFilename(filename: string) {
 		filename = filename.replace(/mp4|mov|gif/, 'jpg');
 		return filename;
@@ -54,7 +52,7 @@
 
 	function scrollHandler(event: InfiniteEvent) {
 		let url = `https://xyquadrat.ch/api/media/top/?skip=${skip}&limit=${limit}`;
-		if (!!filterTagId) {
+		if (filterTagId) {
 			url += `&tag_id=${filterTagId}`;
 		}
 
