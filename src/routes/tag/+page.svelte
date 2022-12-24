@@ -64,14 +64,9 @@
 				<div class="mb-5">
 					{#if isVideo}
 						<!-- svelte-ignore a11y-media-has-caption -->
-						<video
-							class=""
-							controls
-							src="https://xyquadrat.ch/artarindo/media/{meme.filename}"
-							alt="Meme"
-						/>
+						<video controls src="https://xyquadrat.ch/artarindo/media/{meme.filename}" />
 					{:else}
-						<img class="" src="https://xyquadrat.ch/artarindo/media/{meme.filename}" alt="Meme" />
+						<img src="https://xyquadrat.ch/artarindo/media/{meme.filename}" alt="Meme" />
 					{/if}
 				</div>
 				<div class="flex p-4">

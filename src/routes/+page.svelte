@@ -103,7 +103,7 @@
 					/>
 					{#if isVideo(meme.filename)}
 						<!-- svelte-ignore a11y-media-has-caption -->
-						<video controls src="https://xyquadrat.ch/artarindo/media/{meme.filename}" alt="Meme" />
+						<video controls src="https://xyquadrat.ch/artarindo/media/{meme.filename}" />
 					{:else}
 						<img src="https://xyquadrat.ch/artarindo/media/{meme.filename}" alt="Meme" />
 					{/if}
