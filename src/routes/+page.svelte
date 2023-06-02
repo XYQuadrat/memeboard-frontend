@@ -6,6 +6,7 @@
 		type InfiniteLoadingProps
 	} from 'svelte-infinite-loading';
 	import Svelecte from 'svelecte/src/Svelecte.svelte';
+	import { Link, ChevronUp } from 'lucide-svelte';
 
 	interface Meme {
 		filename: string;
@@ -77,9 +78,9 @@
 	<title>D-INFK Memeboard</title>
 </svelte:head>
 
-<main id="content" class="dark:bg-zinc-800 dark:text-gray-100 px-4">
+<main id="content" class="px-4">
 	<h1 class="text-center text-4xl py-6 font-bold">D-INFK Discord Memeboard</h1>
-	<div class="flex flex-wrap gap-2 max-w-md mx-auto pb-5" id="tagFilter">
+	<div class="max-w-md mx-auto pb-5" id="tagFilter">
 		<Svelecte
 			valueField="id"
 			labelField="name"
@@ -89,15 +90,16 @@
 			placeholder="Filter by tag..."
 			clearable="true"
 			class="tagFilter svelecte-control"
+			style="--sv-bg: rgb(51 65 85)"
 		/>
 	</div>
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-2 max-w-7xl gap-x-5 mx-auto">
 		{#each memes as meme}
-			<div class="my-3 transition-all opacity-1 drop-shadow-md">
+			<div class="mb-4 transition-all drop-shadow-md rounded-xl overflow-hidden">
 				<Lightbox transitionDuration={100}>
 					<img
 						slot="thumbnail"
-						class="rounded-t-sm !h-60 w-full object-cover"
+						class="!h-60 w-full object-cover"
 						src="https://xyquadrat.ch/artarindo/media/thumb/{correctFilename(meme.filename)}"
 						alt="Meme Thumbnail"
 					/>
@@ -108,52 +110,27 @@
 						<img src="https://xyquadrat.ch/artarindo/media/{meme.filename}" alt="Meme" />
 					{/if}
 				</Lightbox>
-				<div class="rounded-b-sm dark:bg-slate-700 px-4 pt-2 h-14 flex items-center">
-					<a href={meme.message_url} target="_blank" rel="noreferrer">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-5 w-5 mr-2"
-							viewBox="0 0 20 20"
-							fill="currentColor"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</a>
-					{meme.author_name}
-					<span class="ml-auto text-lg font-semibold text-red-500 flex items-center">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="inline"
-							width="24"
-							height="24"
-							viewBox="0 0 24 24"
-							stroke-width="2"
-							stroke="currentColor"
-							fill="none"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						>
-							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-							<polyline points="6 15 12 9 18 15" />
-						</svg>
-						{meme.score}</span
-					>
-				</div>
-				{#if meme.tags.length > 0}
-					<div class="dark:bg-slate-700 px-4 pb-4 pt-0 flex flex-wrap gap-2 rounded-b-sm">
-						{#each meme.tags as tag}
-							<span
-								class="px-2.5 py-1.5 rounded-full text-gray-700 bg-gray-200 font-semibold text-center text-sm w-max min-w-[2.5rem]"
-							>
-								{tag.name}
-							</span>
-						{/each}
+				<div class="rounded-b-xl bg-slate-700 px-4 py-2 flex flex-col">
+					<div class="flex">
+						<a href={meme.message_url} target="_blank" rel="noreferrer" class="flex items-center font-semibold">
+							<Link class="h-4 w-4 mr-2"/>
+							{meme.author_name}
+						</a>
+						<span class="ml-auto text-lg font-semibold text-sky-500 flex items-center">
+							<ChevronUp />
+							{meme.score}
+						</span>
 					</div>
-				{/if}
+					{#if meme.tags.length > 0}
+						<div class="pt-3 flex flex-wrap gap-1.5">
+							{#each meme.tags as tag}
+								<span class="p-1 px-2 rounded-full text-gray-400 bg-gray-800 text-sm">
+									{tag.name}
+								</span>
+							{/each}
+						</div>
+					{/if}
+				</div>
 			</div>
 		{/each}
 		<InfiniteLoading identifier={loaderId} on:infinite={scrollHandler}>
