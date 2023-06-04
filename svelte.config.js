@@ -9,7 +9,8 @@ const config = {
 
 	kit: {
 		paths: {
-			base: '/memeboard'
+			base: '/memeboard',
+			relative: false,
 		},
 		csp: {
 			mode: 'auto',
