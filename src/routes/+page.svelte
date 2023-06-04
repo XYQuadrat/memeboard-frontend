@@ -112,8 +112,13 @@
 				</Lightbox>
 				<div class="rounded-b-xl bg-slate-700 px-4 py-2 flex flex-col">
 					<div class="flex">
-						<a href={meme.message_url} target="_blank" rel="noreferrer" class="flex items-center font-semibold">
-							<Link class="h-4 w-4 mr-2"/>
+						<a
+							href={meme.message_url}
+							target="_blank"
+							rel="noreferrer"
+							class="flex items-center font-semibold"
+						>
+							<Link class="h-4 w-4 mr-2" />
 							{meme.author_name}
 						</a>
 						<span class="ml-auto text-lg font-semibold text-sky-500 flex items-center">
