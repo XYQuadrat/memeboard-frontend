@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import Tags from 'svelte-tags-input';
 	import { shortcut } from '../../shortcut';
+	import { ChevronRight } from 'lucide-svelte';
 
 	interface Meme {
 		id: number;
@@ -118,7 +119,7 @@
 		{/if}
 		<div class="mx-5 my-auto">
 			<button use:shortcut={{ code: 'ArrowRight' }} on:click={next}>
-				<img src="arrow-right.svg" alt="Next" />
+				<ChevronRight />
 			</button>
 		</div>
 	</div>
