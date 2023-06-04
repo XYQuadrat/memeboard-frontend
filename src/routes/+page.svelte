@@ -5,8 +5,8 @@
 		type InfiniteEvent,
 		type InfiniteLoadingProps
 	} from 'svelte-infinite-loading';
-	import Svelecte from 'svelecte/src/Svelecte.svelte';
 	import { Link, ChevronUp } from 'lucide-svelte';
+	import Select from 'svelte-select';
 
 	interface Meme {
 		filename: string;
@@ -34,12 +34,22 @@
 		tags = await fetch(`https://xyquadrat.ch/api/tags/`).then((r) => r.json());
 	}
 
-	function filterByTag() {
+	function filter() {
 		memes = [];
 		skip = 0;
 
 		// triggers the scrollHandler again
 		loaderId = new Date();
+	}
+
+	function filterByTag(e: CustomEvent) {
+		filterTagId = e.detail.id;
+		filter();
+	}
+
+	function clearFilterByTag(e: CustomEvent) {
+		filterTagId = null;
+		filter();
 	}
 
 	function correctFilename(filename: string) {
@@ -80,17 +90,24 @@
 
 <main id="content" class="px-4">
 	<h1 class="text-center text-4xl py-6 font-bold">D-INFK Discord Memeboard</h1>
-	<div class="max-w-md mx-auto pb-5" id="tagFilter">
-		<Svelecte
-			valueField="id"
-			labelField="name"
-			options={tags}
-			bind:value={filterTagId}
-			on:change={() => filterByTag()}
-			placeholder="Filter by tag..."
-			clearable="true"
-			class="tagFilter svelecte-control"
-			style="--sv-bg: rgb(51 65 85)"
+	<div class="max-w-md mx-auto pb-5 text-black" id="tagFilter">
+		<Select
+			--border-focused="1px solid #0EA5E9"
+			--clear-icon-color="#f9fafb"
+			--chevron-color="#f9fafb"
+			--selected-item-color="#f9fafb"
+			--item-color="#f9fafb"
+			--list-background="#3f3f46"
+			--background="#3f3f46"
+			items={tags}
+			itemId="id"
+			label="name"
+			placeholder="Filter by tag…"
+			clearable
+			showChevron
+			justValue
+			on:change={filterByTag}
+			on:clear={clearFilterByTag}
 		/>
 	</div>
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-2 max-w-7xl gap-x-5 mx-auto">
@@ -145,14 +162,3 @@
 		</InfiniteLoading>
 	</div>
 </main>
-
-<style>
-	#tagFilter :global(.tagFilter) {
-		--sv-bg: rgb(39, 39, 42);
-		--sv-item-color: rgb(243, 244, 246);
-		--sv-item-active-color: rgb(51, 65, 85);
-		--sv-dropdown-shadow: 0 6px 12px rgba(243, 244, 246, 0.175);
-		--sv-highlight-bg: transparent;
-		--sv-highlight-color: rgb(51, 65, 85);
-	}
-</style>
