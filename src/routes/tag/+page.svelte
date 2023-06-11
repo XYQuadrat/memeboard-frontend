@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Tags from 'svelte-tags-input';
 	import { shortcut } from '../../shortcut';
 	import { ChevronRight, ChevronUp, Link } from 'lucide-svelte';
+	import Select from 'svelte-select';
 
 	interface Meme {
 		id: number;
@@ -32,7 +32,7 @@
 				Accept: 'application/json, text/plain, */*',
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ data: event.detail.tags })
+			body: JSON.stringify({ data: event.detail })
 		};
 		fetch(`https://xyquadrat.ch/api/media/${meme.id}/tags/`, options);
 	}
@@ -89,13 +89,18 @@
 						</span>
 					</div>
 					<div class="text-black py-2">
-						<Tags
-							on:tags={handleNewTag}
-							tags={meme.tags}
-							autoComplete={tags}
-							autoCompleteKey={'name'}
-							onlyAutocomplete={true}
-							onlyUnique={true}
+						<Select
+							--border-focused="1px solid #0EA5E9"
+							--background="#3f3f46"
+							items={tags}
+							multiple
+							value={meme.tags}
+							itemId="id"
+							label="name"
+							justValue
+							clearable={false}
+							placeholder="Enter relevant tags…"
+							on:change={handleNewTag}
 						/>
 					</div>
 				</div>

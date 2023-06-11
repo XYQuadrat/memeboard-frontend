@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Lightbox } from 'svelte-lightbox';
-	import Tags from 'svelte-tags-input';
 	import InfiniteLoading, {
 		type InfiniteEvent,
 		type InfiniteLoadingProps
@@ -82,6 +81,7 @@
 	}
 
 	function handleNewTag(tags: Tag[], id: number) {
+		console.log(id, tags);
 		const options = {
 			method: 'POST',
 			headers: {
@@ -161,13 +161,19 @@
 						</span>
 					</div>
 					<div class="text-black py-2 z-10">
-						<Tags
-							on:tags={() => handleNewTag(meme.tags, meme.id)}
-							tags={meme.tags}
-							autoComplete={tags}
-							autoCompleteKey={'name'}
-							onlyAutocomplete={true}
-							onlyUnique={true}
+						<Select
+							--border-focused="1px solid #0EA5E9"
+							--list-background="#3f3f46"
+							--background="#3f3f46"
+							items={tags}
+							multiple
+							value={meme.tags}
+							itemId="id"
+							label="name"
+							justValue
+							clearable={false}
+							placeholder="Enter relevant tags…"
+							on:change={(e) => handleNewTag(e.detail, meme.id)}
 						/>
 					</div>
 				</div>
