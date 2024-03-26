@@ -8,6 +8,6 @@ steps:
     commands:
       - npm ci
       - npm run build
-      - cp -TR dist /tmp/output
+      - cp -TR build /tmp/output
     volumes:
       - /srv/memeboard:/tmp/output
