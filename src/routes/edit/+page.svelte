@@ -104,7 +104,7 @@
 
 <main id="content" class="px-4">
 	<h1 class="text-center text-4xl py-6 font-bold">D-INFK Discord Memeboard</h1>
-	<div class="max-w-md mx-auto pb-5" id="tagFilter">
+	<div class="max-w-md mx-auto pb-5 text-black" id="tagFilter">
 		<Select
 			--border-focused="1px solid #0EA5E9"
 			--clear-icon-color="#f9fafb"
@@ -126,7 +126,7 @@
 	</div>
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-2 max-w-7xl gap-x-5 mx-auto">
 		{#each memes as meme}
-			<div class="mb-4 transition-all drop-shadow-md rounded-xl">
+			<div class="mb-4 transition-all drop-shadow-md rounded-xl overflow-hidden">
 				<Lightbox transitionDuration={100}>
 					<img
 						slot="thumbnail"
@@ -160,9 +160,14 @@
 							{meme.score}
 						</span>
 					</div>
-					<div class="text-black py-2 z-10">
+					<div class="text-black py-2">
 						<Select
 							--border-focused="1px solid #0EA5E9"
+							--clear-icon-color="#f9fafb"
+							--chevron-color="#f9fafb"
+							--selected-item-color="#f9fafb"
+							--item-color="#f9fafb"
+							--multi-item-color="#000"
 							--list-background="#3f3f46"
 							--background="#3f3f46"
 							items={tags}
