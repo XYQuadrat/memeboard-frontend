@@ -36,7 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"lucide-svelte": "^0.379.0",
+		"lucide-svelte": "^0.383.0",
 		"svelte-infinite-loading": "^1.4.0",
 		"svelte-select": "^5.8.3"
 	}
